@@ -1,64 +1,122 @@
 "use client";
 
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import { useEffect, useState } from "react";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import * as THREE from "three";
 
-type PosePoint = {
-  x: number;
-  y: number;
-};
+/** Works from browser + CORS; used when product GLB is missing or a demo placeholder URL. */
+const FALLBACK_GLB =
+  "https://threejs.org/examples/models/gltf/DamagedHelmet/glTF/DamagedHelmet.gltf";
 
-type TryOnCanvasProps = {
-  videoRef: React.RefObject<HTMLVideoElement>;
-};
+function pickGlbUrl(url?: string | null): string {
+  if (!url || typeof url !== "string") return FALLBACK_GLB;
+  const t = url.trim();
+  if (!t.startsWith("http")) return FALLBACK_GLB;
+  // Seed data uses example.com paths that never load
+  if (t.includes("example.com")) return FALLBACK_GLB;
+  return t;
+}
 
-function GarmentProxy({ torsoCenter }: { torsoCenter: PosePoint | null }) {
-  const [position, setPosition] = useState<[number, number, number]>([0, 0, 0]);
+function VideoBackdrop({ videoEl }: { videoEl: HTMLVideoElement | null }) {
+  const [map, setMap] = useState<THREE.VideoTexture | null>(null);
 
   useEffect(() => {
-    if (!torsoCenter) return;
-    // Map 2D normalized coords into a simple 3D position.
-    const x = (torsoCenter.x - 0.5) * 2;
-    const y = (0.5 - torsoCenter.y) * 2;
-    setPosition([x, y, 0]);
-  }, [torsoCenter]);
+    if (!videoEl) return;
+    const tex = new THREE.VideoTexture(videoEl);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.minFilter = THREE.LinearFilter;
+    tex.magFilter = THREE.LinearFilter;
+    setMap(tex);
+    return () => {
+      tex.dispose();
+      setMap(null);
+    };
+  }, [videoEl]);
+
+  useFrame(() => {
+    if (map) map.needsUpdate = true;
+  });
+
+  if (!map) return null;
 
   return (
-    <mesh position={position}>
-      <boxGeometry args={[0.7, 0.9, 0.3]} />
-      <meshStandardMaterial color="#FF7A18" metalness={0.3} roughness={0.4} />
+    <mesh position={[0, 0, -2.35]}>
+      <planeGeometry args={[3.4, 2.55]} />
+      <meshBasicMaterial map={map} toneMapped={false} />
     </mesh>
   );
 }
 
-export function TryOnCanvas({ videoRef }: TryOnCanvasProps) {
-  const [torsoCenter, setTorsoCenter] = useState<PosePoint | null>(null);
+function GltfGarment({ url }: { url: string }) {
+  const { scene } = useGLTF(url);
+  const obj = useMemo(() => scene.clone(true), [scene, url]);
+  return (
+    <primitive object={obj} scale={0.42} position={[0, -0.2, 0.45]} rotation={[0, 0.55, 0]} />
+  );
+}
 
-  // For demo, gently animate a fake torso center if no pose.
+function ProductImageBillboard({ imageUrl }: { imageUrl: string }) {
+  const texture = useLoader(THREE.TextureLoader, imageUrl);
   useEffect(() => {
-    let frame: number;
-    const start = performance.now();
-
-    const loop = (t: number) => {
-      const elapsed = (t - start) / 1000;
-      const x = 0.5 + 0.05 * Math.sin(elapsed);
-      const y = 0.4 + 0.03 * Math.cos(elapsed * 0.8);
-      setTorsoCenter({ x, y });
-      frame = requestAnimationFrame(loop);
-    };
-
-    frame = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(frame);
-  }, []);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.generateMipmaps = true;
+  }, [texture]);
 
   return (
-    <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
-      <ambientLight intensity={0.8} />
-      <directionalLight position={[2, 3, 4]} intensity={1.2} />
-      <GarmentProxy torsoCenter={torsoCenter} />
-      <OrbitControls enablePan={false} />
+    <mesh position={[0.95, 0.05, 0.55]} rotation={[0, -0.45, 0]}>
+      <planeGeometry args={[0.6, 0.6]} />
+      <meshStandardMaterial map={texture} roughness={0.6} metalness={0.05} />
+    </mesh>
+  );
+}
+
+export type TryOnCanvasProps = {
+  videoRef: React.RefObject<HTMLVideoElement | null>;
+  cameraReady: boolean;
+  glbUrl?: string | null;
+  productImageUrl?: string | null;
+};
+
+export function TryOnCanvas({ videoRef, cameraReady, glbUrl, productImageUrl }: TryOnCanvasProps) {
+  const [videoEl, setVideoEl] = useState<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    if (!cameraReady) {
+      setVideoEl(null);
+      return;
+    }
+    const tick = () => {
+      if (videoRef.current) setVideoEl(videoRef.current);
+    };
+    tick();
+    const id = window.setInterval(tick, 100);
+    return () => clearInterval(id);
+  }, [cameraReady, videoRef]);
+
+  const garmentUrl = useMemo(() => pickGlbUrl(glbUrl), [glbUrl]);
+
+  return (
+    <Canvas
+      camera={{ position: [0, 0.05, 2.5], fov: 42 }}
+      gl={{ alpha: false, antialias: true }}
+      dpr={[1, 2]}
+    >
+      <color attach="background" args={["#050505"]} />
+      <ambientLight intensity={0.45} />
+      <directionalLight position={[3, 5, 4]} intensity={1.15} castShadow />
+      <directionalLight position={[-3, 2, -2]} intensity={0.35} />
+
+      <Suspense fallback={null}>
+        <VideoBackdrop videoEl={videoEl} />
+        <Environment preset="city" />
+        <GltfGarment key={garmentUrl} url={garmentUrl} />
+        {productImageUrl ? <ProductImageBillboard imageUrl={productImageUrl} /> : null}
+      </Suspense>
+
+      <OrbitControls enablePan={false} minDistance={1.4} maxDistance={4.5} target={[0, 0, 0]} />
     </Canvas>
   );
 }
 
+useGLTF.preload(FALLBACK_GLB);

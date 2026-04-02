@@ -3,7 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import { TryOnCanvas } from "./TryOnCanvas";
 
-export function TryOnViewport() {
+export type TryOnViewportProps = {
+  /** Product GLB URL from MongoDB (optional). */
+  glbUrl?: string | null;
+  /** First product image for a small billboard next to the 3D preview. */
+  productImageUrl?: string | null;
+};
+
+export function TryOnViewport({ glbUrl, productImageUrl }: TryOnViewportProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [cameraReady, setCameraReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -116,7 +123,15 @@ export function TryOnViewport() {
       </div>
 
       <div className="relative h-72 w-full overflow-hidden rounded-xl border border-white/10 bg-black/60 md:h-auto md:min-h-[320px] md:w-1/2">
-        <TryOnCanvas videoRef={videoRef} />
+        <div className="absolute left-2 top-2 z-10 max-w-[85%] rounded-md bg-black/55 px-2 py-1 text-[10px] text-white/70">
+          Preview: your camera (backdrop) + 3D garment. Drag to rotate.
+        </div>
+        <TryOnCanvas
+          videoRef={videoRef}
+          cameraReady={cameraReady}
+          glbUrl={glbUrl}
+          productImageUrl={productImageUrl}
+        />
       </div>
     </div>
   );

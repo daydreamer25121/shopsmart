@@ -10,6 +10,7 @@ type Product = {
   name: string;
   category: string;
   images: string[];
+  glbModel?: string | null;
   tryOnEligible: boolean;
   colours: { name: string; hex: string; bestForSkinTone?: string[] }[];
   price?: number;
@@ -126,9 +127,10 @@ export default function ProductPage({ params }: { params: { id: string } }) {
 
       {showTryOn && (
         <div className="mt-6">
-          {/* In a full build, TryOnViewport would lift skin tone into global/user state.
-              For this demo, we simply let it detect tone and you can manually map it here later. */}
-          <TryOnViewport />
+          <TryOnViewport
+            glbUrl={product.glbModel}
+            productImageUrl={product.images?.[0] ?? null}
+          />
         </div>
       )}
     </main>
