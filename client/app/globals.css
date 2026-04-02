@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: #ff7a18;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #070707;
+  color: #ffffff;
+}
+
+/* Orange accent hooks (used by future ShadCN theme tokens). */
+.text-accent {
+  color: var(--accent);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+

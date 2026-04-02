@@ -1,0 +1,15 @@
+{
+  "name": "shopsmart",
+  "private": true,
+  "version": "0.1.0",
+  "description": "ShopSmart full-stack AI e-commerce platform",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.5.3"
+  },
+  "scripts": {
+    "seed": "node database/seeds/index.js",
+    "seed:reset": "node database/seeds/index.js --reset"
+  }
+}
