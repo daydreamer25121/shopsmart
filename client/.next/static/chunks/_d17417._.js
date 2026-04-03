@@ -9,16 +9,17 @@ __turbopack_esm__({
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$react$2d$three$2d$fiber$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/@react-three/fiber/dist/react-three-fiber.esm.js [app-client] (ecmascript) <locals>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$index$2d$5918012a$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useFrame$3e$__ = __turbopack_import__("[project]/node_modules/@react-three/fiber/dist/index-5918012a.esm.js [app-client] (ecmascript) <export C as useFrame>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$index$2d$5918012a$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__F__as__useLoader$3e$__ = __turbopack_import__("[project]/node_modules/@react-three/fiber/dist/index-5918012a.esm.js [app-client] (ecmascript) <export F as useLoader>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Environment$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/@react-three/drei/core/Environment.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$OrbitControls$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/@react-three/drei/core/OrbitControls.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$useGLTF$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/@react-three/drei/core/useGLTF.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/three/build/three.module.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$tryOn$2f$BuyerAvatar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/components/tryOn/BuyerAvatar.tsx [app-client] (ecmascript)");
 "__TURBOPACK__ecmascript__hoisting__location__";
 ;
-var _s = __turbopack_refresh__.signature(), _s1 = __turbopack_refresh__.signature(), _s2 = __turbopack_refresh__.signature(), _s3 = __turbopack_refresh__.signature();
+var _s = __turbopack_refresh__.signature(), _s1 = __turbopack_refresh__.signature(), _s2 = __turbopack_refresh__.signature();
 "use client";
+;
 ;
 ;
 ;
@@ -28,7 +29,6 @@ function pickGlbUrl(url) {
     if (!url || typeof url !== "string") return FALLBACK_GLB;
     const t = url.trim();
     if (!t.startsWith("http")) return FALLBACK_GLB;
-    // Seed data uses example.com paths that never load
     if (t.includes("example.com")) return FALLBACK_GLB;
     return t;
 }
@@ -67,7 +67,7 @@ function VideoBackdrop({ videoEl }) {
                 ]
             }, void 0, false, {
                 fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                lineNumber: 45,
+                lineNumber: 44,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshBasicMaterial", {
@@ -75,13 +75,13 @@ function VideoBackdrop({ videoEl }) {
                 toneMapped: false
             }, void 0, false, {
                 fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                lineNumber: 46,
+                lineNumber: 45,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-        lineNumber: 44,
+        lineNumber: 43,
         columnNumber: 5
     }, this);
 }
@@ -91,29 +91,42 @@ _s(VideoBackdrop, "ww4M4rxLMKBicvLiTQcUSvT2egQ=", false, function() {
     ];
 });
 _c = VideoBackdrop;
-function GltfGarment({ url }) {
+function GltfGarment({ url, isFitting }) {
     _s1();
     const { scene } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$useGLTF$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useGLTF"])(url);
     const obj = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])(()=>scene.clone(true), [
         scene,
         url
     ]);
+    // If fitting on avatar, position it over the torso
+    // Otherwise, use the default floating position
+    const position = isFitting ? [
+        0,
+        0.25,
+        0.1
+    ] : [
+        0,
+        -0.2,
+        0.45
+    ];
+    const scale = isFitting ? 0.35 : 0.42;
+    const rotation = isFitting ? [
+        0,
+        0,
+        0
+    ] : [
+        0,
+        0.55,
+        0
+    ];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("primitive", {
         object: obj,
-        scale: 0.42,
-        position: [
-            0,
-            -0.2,
-            0.45
-        ],
-        rotation: [
-            0,
-            0.55,
-            0
-        ]
+        scale: scale,
+        position: position,
+        rotation: rotation
     }, void 0, false, {
         fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-        lineNumber: 55,
+        lineNumber: 61,
         columnNumber: 5
     }, this);
 }
@@ -123,61 +136,8 @@ _s1(GltfGarment, "E+dPq7aFyFnRuaTtOJqLhnkvjkY=", false, function() {
     ];
 });
 _c1 = GltfGarment;
-function ProductImageBillboard({ imageUrl }) {
+function TryOnCanvas({ videoRef, cameraReady, glbUrl, mode, buyerProfile }) {
     _s2();
-    const texture = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$index$2d$5918012a$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__F__as__useLoader$3e$__["useLoader"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.TextureLoader, imageUrl);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        texture.colorSpace = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.SRGBColorSpace;
-        texture.generateMipmaps = true;
-    }, [
-        texture
-    ]);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
-        position: [
-            0.95,
-            0.05,
-            0.55
-        ],
-        rotation: [
-            0,
-            -0.45,
-            0
-        ],
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("planeGeometry", {
-                args: [
-                    0.6,
-                    0.6
-                ]
-            }, void 0, false, {
-                fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                lineNumber: 68,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
-                map: texture,
-                roughness: 0.6,
-                metalness: 0.05
-            }, void 0, false, {
-                fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                lineNumber: 69,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-        lineNumber: 67,
-        columnNumber: 5
-    }, this);
-}
-_s2(ProductImageBillboard, "7v6V88+FoA27GNv13GCkzpc4SwU=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$index$2d$5918012a$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__F__as__useLoader$3e$__["useLoader"]
-    ];
-});
-_c2 = ProductImageBillboard;
-function TryOnCanvas({ videoRef, cameraReady, glbUrl, productImageUrl }) {
-    _s3();
     const [videoEl, setVideoEl] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (!cameraReady) {
@@ -222,14 +182,14 @@ function TryOnCanvas({ videoRef, cameraReady, glbUrl, productImageUrl }) {
                 ]
             }, void 0, false, {
                 fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                lineNumber: 105,
+                lineNumber: 98,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ambientLight", {
                 intensity: 0.45
             }, void 0, false, {
                 fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                lineNumber: 106,
+                lineNumber: 99,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("directionalLight", {
@@ -242,7 +202,7 @@ function TryOnCanvas({ videoRef, cameraReady, glbUrl, productImageUrl }) {
                 castShadow: true
             }, void 0, false, {
                 fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                lineNumber: 107,
+                lineNumber: 100,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("directionalLight", {
@@ -254,44 +214,57 @@ function TryOnCanvas({ videoRef, cameraReady, glbUrl, productImageUrl }) {
                 intensity: 0.35
             }, void 0, false, {
                 fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                lineNumber: 108,
+                lineNumber: 101,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Suspense"], {
                 fallback: null,
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(VideoBackdrop, {
+                    mode === "VIDEO" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(VideoBackdrop, {
                         videoEl: videoEl
                     }, void 0, false, {
                         fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                        lineNumber: 111,
-                        columnNumber: 9
-                    }, this),
+                        lineNumber: 105,
+                        columnNumber: 11
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$tryOn$2f$BuyerAvatar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["BuyerAvatar"], {
+                                heightCm: buyerProfile?.height || 175,
+                                weightKg: buyerProfile?.weight || 75,
+                                skinTone: buyerProfile?.skinTone || "Wheatish"
+                            }, void 0, false, {
+                                fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
+                                lineNumber: 108,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Environment$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Environment"], {
+                                preset: "city"
+                            }, void 0, false, {
+                                fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
+                                lineNumber: 113,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Environment$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Environment"], {
                         preset: "city"
                     }, void 0, false, {
                         fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                        lineNumber: 112,
+                        lineNumber: 116,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(GltfGarment, {
-                        url: garmentUrl
+                        url: garmentUrl,
+                        isFitting: mode === "AVATAR"
                     }, garmentUrl, false, {
                         fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                        lineNumber: 113,
+                        lineNumber: 117,
                         columnNumber: 9
-                    }, this),
-                    productImageUrl ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductImageBillboard, {
-                        imageUrl: productImageUrl
-                    }, void 0, false, {
-                        fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                        lineNumber: 114,
-                        columnNumber: 28
-                    }, this) : null
+                    }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                lineNumber: 110,
+                lineNumber: 103,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$OrbitControls$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["OrbitControls"], {
@@ -305,24 +278,23 @@ function TryOnCanvas({ videoRef, cameraReady, glbUrl, productImageUrl }) {
                 ]
             }, void 0, false, {
                 fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-                lineNumber: 117,
+                lineNumber: 120,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/tryOn/TryOnCanvas.tsx",
-        lineNumber: 100,
+        lineNumber: 93,
         columnNumber: 5
     }, this);
 }
-_s3(TryOnCanvas, "B5wSY9hZtLFE3z2JJFOXWGxWhnQ=");
-_c3 = TryOnCanvas;
+_s2(TryOnCanvas, "B5wSY9hZtLFE3z2JJFOXWGxWhnQ=");
+_c2 = TryOnCanvas;
 __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$useGLTF$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useGLTF"].preload(FALLBACK_GLB);
-var _c, _c1, _c2, _c3;
+var _c, _c1, _c2;
 __turbopack_refresh__.register(_c, "VideoBackdrop");
 __turbopack_refresh__.register(_c1, "GltfGarment");
-__turbopack_refresh__.register(_c2, "ProductImageBillboard");
-__turbopack_refresh__.register(_c3, "TryOnCanvas");
+__turbopack_refresh__.register(_c2, "TryOnCanvas");
 
 })()),
 "[project]/components/tryOn/TryOnViewport.tsx [app-client] (ecmascript)": (({ r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, g: global, __dirname, k: __turbopack_refresh__ }) => (() => {

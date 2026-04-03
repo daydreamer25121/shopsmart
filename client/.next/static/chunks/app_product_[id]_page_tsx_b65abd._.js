@@ -1,0 +1,43 @@
+(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push([
+    "static/chunks/app_product_[id]_page_tsx_b65abd._.js",
+    {},
+]);
+(globalThis.TURBOPACK_CHUNK_LISTS = globalThis.TURBOPACK_CHUNK_LISTS || []).push({
+  "path": "static/chunks/app_product_[id]_page_tsx_b65abd._.js",
+  "chunks": [
+    "static/chunks/node_modules_framer-motion_dist_es_92139a._.js",
+    "static/chunks/node_modules_three-stdlib_8baa3b._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-core_dist_backends_76db62._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-core_dist_engine_c8e07b.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-core_dist_ops_image_d6d798._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-core_dist_ops_losses_2b0d9b._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-core_dist_ops_fused_b27188._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-core_dist_ops_ops_b693c8.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-core_dist_ops_ef1dde._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-core_dist_io_12b93f._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-core_dist_optimizers_9df6f7._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-core_dist_base_d4347b.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-core_dist_base_3f7730.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-core_dist_index_cce542.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-core_dist_f2b721._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-converter_dist_operations_executors_d62d6a._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-converter_dist_operations_op_list_9fa254._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-converter_dist_operations_aec2b8._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-converter_dist_executor_69d8f8._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-converter_dist_0e2671._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-backend-webgpu_dist_backend_webgpu_e30147.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-backend-webgpu_dist_kernels_65c557._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-backend-webgpu_dist_register_all_kernels_3f1932.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-backend-webgpu_dist_e3413f._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-backend-cpu_dist_8c4a31._.js",
+    "static/chunks/node_modules_@tensorflow-models_pose-detection_dist_pose-detection_esm_728564.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-backend-webgl_dist_shader_compiler_d99511.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-backend-webgl_dist_backend_webgl_013aef.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-backend-webgl_dist_kernels_51592e._.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-backend-webgl_dist_register_all_kernels_01897c.js",
+    "static/chunks/node_modules_@tensorflow_tfjs-backend-webgl_dist_82984b._.js",
+    "static/chunks/node_modules_2b6580._.js",
+    "static/chunks/_b5a1ff._.js"
+  ],
+  "source": "dynamic"
+});

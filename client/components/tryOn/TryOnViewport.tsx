@@ -1,139 +1,151 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { TryOnCanvas } from "./TryOnCanvas";
+import { PoseTracker, PoseLandmarks } from "./PoseTracker";
 
 export type TryOnViewportProps = {
-  /** Product GLB URL from MongoDB (optional). */
   glbUrl?: string | null;
-  /** First product image for a small billboard next to the 3D preview. */
   productImageUrl?: string | null;
 };
 
 export function TryOnViewport({ glbUrl, productImageUrl }: TryOnViewportProps) {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
   const [cameraReady, setCameraReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
-   const [skinTone, setSkinTone] = useState<string | null>(null);
+  const [mode, setMode] = useState<"VIDEO" | "AVATAR">("AVATAR");
+  const [buyerProfile, setBuyerProfile] = useState<any>(null);
+  const [poseData, setPoseData] = useState<PoseLandmarks | null>(null);
 
-  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
   useEffect(() => {
-    async function initCamera() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "user", width: 640, height: 480 },
-        });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          await videoRef.current.play();
-          setCameraReady(true);
-        }
-      } catch (e: any) {
-        setError(e?.message || "Could not access camera");
-      }
+    // Load profile from localStorage
+    const saved = localStorage.getItem("buyer_profile");
+    if (saved) {
+      setBuyerProfile(JSON.parse(saved));
     }
-    initCamera();
-
-    return () => {
-      if (videoRef.current && videoRef.current.srcObject instanceof MediaStream) {
-        videoRef.current.srcObject.getTracks().forEach((t) => t.stop());
-      }
-    };
   }, []);
 
-  async function analyzeSkinTone() {
-    if (!videoRef.current) return;
-    const video = videoRef.current;
-    if (!cameraReady) return;
-
-    const canvas = document.createElement("canvas");
-    const w = 160;
-    const h = 120;
-    canvas.width = w;
-    canvas.height = h;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    ctx.drawImage(video, (video.videoWidth - w) / 2, (video.videoHeight - h) / 3, w, h, 0, 0, w, h);
-    const imgData = ctx.getImageData(0, 0, w, h);
-    let rSum = 0;
-    let gSum = 0;
-    let bSum = 0;
-    let count = 0;
-    for (let i = 0; i < imgData.data.length; i += 4) {
-      const r = imgData.data[i];
-      const g = imgData.data[i + 1];
-      const b = imgData.data[i + 2];
-      // Skip very dark / bright pixels to reduce background noise
-      const max = Math.max(r, g, b);
-      const min = Math.min(r, g, b);
-      const lightness = (max + min) / 2;
-      if (lightness < 30 || lightness > 240) continue;
-      rSum += r;
-      gSum += g;
-      bSum += b;
-      count += 1;
-    }
-
-    if (!count) return;
-    const rgb = [Math.round(rSum / count), Math.round(gSum / count), Math.round(bSum / count)];
-
+  async function startCamera() {
+    setError(null);
     try {
-      const res = await fetch(`${baseUrl}/api/skin-tone`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ rgb }),
+      const s = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user", width: 1280, height: 720 },
+        audio: false,
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = await res.json();
-      setSkinTone(json.skinTone || null);
-    } catch (e) {
-      // Silent fail for demo
+      streamRef.current = s;
+      if (videoRef.current) {
+        videoRef.current.srcObject = s;
+        videoRef.current.onloadedmetadata = () => {
+          videoRef.current?.play();
+          setCameraReady(true);
+        };
+      }
+    } catch (e: any) {
+      setError("Camera access denied or NOT available. Using 3D Avatar mode.");
+      setMode("AVATAR");
     }
   }
 
+  function stopCamera() {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((t) => t.stop());
+      streamRef.current = null;
+    }
+    setCameraReady(false);
+  }
+
+  useEffect(() => {
+    if (mode === "VIDEO") {
+      startCamera();
+    } else {
+      stopCamera();
+    }
+    return () => stopCamera();
+  }, [mode]);
+
   return (
-    <div className="flex flex-col gap-4 md:flex-row">
-      <div className="relative w-full overflow-hidden rounded-xl border border-white/10 bg-black/40 md:w-1/2">
-        {!cameraReady && !error && (
-          <div className="absolute inset-0 flex items-center justify-center text-xs text-white/60">
-            Allow camera access to start virtual try-on...
-          </div>
-        )}
-        {error && (
-          <div className="absolute inset-0 flex items-center justify-center text-xs text-red-300">
-            {error}
-          </div>
-        )}
-        <video ref={videoRef} className="h-full w-full object-cover" playsInline muted />
-        <div className="absolute bottom-2 left-2 flex gap-2">
-          <button
-            onClick={analyzeSkinTone}
-            className="rounded-md bg-accent px-3 py-1 text-xs font-semibold text-black"
-          >
-            Detect skin tone
-          </button>
-          {skinTone && (
-            <span className="rounded-md bg-black/60 px-3 py-1 text-xs text-white/80">
-              Skin tone: <span className="font-semibold text-accent">{skinTone}</span>
-            </span>
-          )}
-        </div>
+    <div className="relative h-full w-full overflow-hidden rounded-3xl bg-black border border-white/10 shadow-2xl">
+      <video ref={videoRef} className="hidden" playsInline muted />
+
+      <div className="absolute inset-0 z-0">
+        <PoseTracker 
+          videoRef={videoRef} 
+          enabled={mode === "VIDEO" && cameraReady} 
+          onPoseUpdate={setPoseData} 
+        />
+        <TryOnCanvas 
+           videoRef={videoRef} 
+           cameraReady={cameraReady} 
+           glbUrl={glbUrl} 
+           productImageUrl={productImageUrl} 
+           mode={mode}
+           buyerProfile={buyerProfile}
+           poseData={poseData}
+        />
       </div>
 
-      <div className="relative h-72 w-full overflow-hidden rounded-xl border border-white/10 bg-black/60 md:h-auto md:min-h-[320px] md:w-1/2">
-        <div className="absolute left-2 top-2 z-10 max-w-[85%] rounded-md bg-black/55 px-2 py-1 text-[10px] text-white/70">
-          Preview: your camera (backdrop) + 3D garment. Drag to rotate.
+      {/* UI Overlay */}
+      <motion.div 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="absolute inset-x-0 top-0 z-10 flex items-center justify-between p-6 bg-gradient-to-b from-black/60 to-transparent"
+      >
+        <div>
+          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-accent mb-1">Advanced 3D Try-On</div>
+          <p className="text-xs text-white/50">{mode === 'AVATAR' ? 'Fitting on your Digital Twin' : 'AR Layer over Video Feed'}</p>
         </div>
-        <TryOnCanvas
-          videoRef={videoRef}
-          cameraReady={cameraReady}
-          glbUrl={glbUrl}
-          productImageUrl={productImageUrl}
-        />
+        
+        <div className="flex gap-2">
+           <button 
+             onClick={() => setMode("AVATAR")}
+             className={`px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition border ${mode === 'AVATAR' ? 'bg-white text-black border-white' : 'bg-black/40 text-white/60 border-white/10 hover:border-white/30'}`}
+           >
+             3D Avatar
+           </button>
+           <button 
+             onClick={() => setMode("VIDEO")}
+             className={`px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition border ${mode === 'VIDEO' ? 'bg-white text-black border-white' : 'bg-black/40 text-white/60 border-white/10 hover:border-white/30'}`}
+           >
+             Magic Mirror (AR)
+           </button>
+        </div>
+      </motion.div>
+
+      {/* Tracking Status Indicator */}
+      {mode === "VIDEO" && cameraReady && (
+        <div className="absolute top-24 left-6 z-10 flex items-center gap-2">
+           <div className={`w-2 h-2 rounded-full ${poseData ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
+           <span className="text-[10px] font-bold uppercase tracking-widest text-white/60">
+             {poseData ? 'Body Tracked' : 'Searching for Body...'}
+           </span>
+        </div>
+      )}
+
+      {error && mode === "VIDEO" && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center p-8 bg-black/60 backdrop-blur-md">
+          <div className="text-center max-w-xs">
+            <div className="text-4xl mb-4">⚠️</div>
+            <p className="text-sm text-white font-medium mb-4">{error}</p>
+            <button onClick={() => setMode("AVATAR")} className="bg-accent text-black text-[10px] font-black px-6 py-3 rounded-xl uppercase">Switch to Avatar Mode</button>
+          </div>
+        </div>
+      )}
+
+      {/* Disclaimer */}
+      <div className="absolute bottom-6 left-6 right-6 z-10 flex justify-between items-end">
+         <div className="text-[8px] text-white/20 uppercase font-bold tracking-widest max-w-[200px]">
+           3D Geometry is AI-generated and may vary based on lighting and model quality.
+         </div>
+         {mode === 'AVATAR' && buyerProfile && (
+           <div className="text-right">
+             <div className="text-[10px] text-white/60 font-bold mb-1">{buyerProfile.name}'s Avatar</div>
+             <div className="text-[10px] text-accent font-black uppercase tracking-widest">{buyerProfile.height}cm • {buyerProfile.weight}kg</div>
+           </div>
+         )}
       </div>
     </div>
   );
 }
-
